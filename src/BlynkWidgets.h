@@ -12,36 +12,44 @@
 #include <WidgetTerminal.h>
 #include <WidgetTimeInput.h>
 #include <WidgetMap.h>
-
+#include <WidgetBridge.h>
 // Cannot auto-include as these have library dependencies
-//#include <WidgetRTC.h>
+// #include <WidgetRTC.h>
 
-template<class T>
-class VPinWriteOnChange {
+template <class T>
+class VPinWriteOnChange
+{
     T prev;
     const int vpin;
+
 public:
     VPinWriteOnChange(int v)
         : vpin(v)
-    {}
+    {
+    }
 
-    VPinWriteOnChange<T>& operator= (const T& value) {
+    VPinWriteOnChange<T> &operator=(const T &value)
+    {
         update(value);
         return *this;
     }
 
-    void set(const T& value) {
+    void set(const T &value)
+    {
         prev = value;
     }
 
-    void update(const T& value) {
-        if (value != prev) {
+    void update(const T &value)
+    {
+        if (value != prev)
+        {
             prev = value;
             report();
         }
     }
 
-    void report() {
+    void report()
+    {
         Blynk.virtualWrite(vpin, prev);
     }
 };
